@@ -1,13 +1,19 @@
 import express, { Request, Response } from "express";
 import dotenv from "dotenv";
 
+import tasksRouter from "./routes/tasks";
+
 dotenv.config();
 
 const app = express();
 const port = process.env.PORT || 8080;
 
-app.get("/", (req: Request, res: Response) => {
-  res.send("Hello, World!");
+app.use(express.json());
+
+app.use("/tasks", tasksRouter);
+
+app.get("/health-check", (_: Request, res: Response) => {
+  res.status(200).send("OK");
 });
 
 app.listen(port, () => {

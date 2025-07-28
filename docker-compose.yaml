@@ -1,4 +1,3 @@
-version: "3.8"
 services:
   todo_mysql:
     container_name: todo_mysql
@@ -25,6 +24,11 @@ services:
       - .env
     volumes:
       - ./:/app
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health-check"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
 volumes:
   data:
